@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Formulaire de Soumission</title>
+  </head>
+
+  <body>
+    <div class="flex-container">
+      <div class="sidebar">
+        <nav>
+          <ul>
+            <li><a href="/">Administration</a></li>
+            <li><a href="/form">Formulaire</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="main-content">
+        <div class="dashboard-header">
+          <h1>Formulaire de Soumission</h1>
+          <p>
+            Remplissez le formulaire ci-dessous pour soumettre un nouveau
+            formulaire.
+          </p>
+        </div>
+
+        <div class="dashboard-cards">
+          <div class="dashboard-card">
+            <form action="http://localhost:3000/submit-form" method="POST">
+              <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
+              <label for="name">Nom :</label><br />
+              <input type="text" id="name" name="name" required /><br />
+
+              <label for="email">Email :</label><br />
+              <input type="email" id="email" name="email" required /><br />
+
+              <label for="message">Message :</label><br />
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                cols="50"
+                required
+              ></textarea
+              ><br />
+
+              <input type="submit" value="Soumettre" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

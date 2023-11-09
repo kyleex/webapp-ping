@@ -1,0 +1,123 @@
+/* Style de base pour le body */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex; /* Utilise flexbox pour le layout principal */
+  min-height: 100vh; /* Hauteur minimale pour remplir la fenêtre */
+  background-color: #f5f7fd;
+}
+/* Container pour la sidebar et le contenu */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* La sidebar */
+.sidebar {
+  width: 250px; /* Largeur fixe pour la sidebar */
+  background-color: #fff; /* Couleur de fond blanche */
+  padding-top: 20px; /* Espacement en haut */
+  position: fixed; /* Sidebar fixée à gauche */
+  height: 100vh; /* Hauteur complète de la vue */
+  overflow-y: auto; /* Permettre le défilement si le contenu est long */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Ombre pour un effet de profondeur */
+}
+
+/* Les liens de la sidebar */
+.sidebar a {
+  padding: 6px 8px 6px 16px; /* Padding */
+  text-decoration: none; /* Pas de soulignement */
+  font-size: 25px; /* Taille de la police */
+  color: #333; /* Couleur de la police pour contraste */
+  display: block; /* Affichage en bloc */
+}
+
+.sidebar a:hover {
+  color: #000; /* Couleur au survol plus foncée */
+  background-color: #ddd; /* Fond au survol */
+}
+
+/* Le contenu principal avec flexbox */
+.main-content {
+  margin-left: 250px; /* Marge gauche égale à la largeur de la sidebar */
+  flex-grow: 1; /* Permet au contenu principal de remplir l'espace restant */
+  padding: 1rem; /* Padding pour le contenu */
+  overflow-y: auto; /* Permettre le défilement si le contenu est long */
+  display: flex; /* Utilise flexbox pour les éléments enfants */
+  flex-wrap: wrap; /* Les éléments passent à la ligne si nécessaire */
+  gap: 1rem; /* Espace entre les éléments flex */
+  align-items: stretch; /* Les éléments s'étendent pour remplir l'espace en hauteur */
+  overflow-y: auto; /* Permettre le défilement si le contenu est long */
+  flex-direction: column; /* Les éléments s'alignent horizontalement */
+}
+
+/* En-tête du tableau de bord */
+.dashboard-header {
+  /* Stylisez votre en-tête comme vous le souhaitez ici */
+  margin-bottom: 0.5rem; /* Espace avant les cartes */
+}
+
+/* Cartes pour les tableaux et graphiques */
+.dashboard-card {
+  flex: 1 1 calc(50% - 1rem); /* Prend la moitié de l'espace disponible, moins la marge */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre pour un effet de profondeur */
+  background-color: #fff; /* Couleur de fond blanche */
+  margin: 0.5rem; /* Marge autour de chaque carte */
+  padding: 1rem; /* Padding à l'intérieur de chaque carte */
+  box-sizing: border-box; /* Inclut padding et border dans la largeur et hauteur de l'élément */
+}
+
+/* Réduire la marge du haut pour la première carte */
+.dashboard-cards .dashboard-card:first-of-type {
+  margin-top: 0; /* Aucune marge au-dessus de la première carte */
+}
+
+/* Conteneur pour les cartes du tableau de bord */
+.dashboard-cards {
+  display: flex; /* Utilise flexbox pour les éléments enfants */
+  flex-wrap: wrap; /* Les éléments passent à la ligne si nécessaire */
+  align-items: flex-start; /* Alignement au début des éléments flex */
+}
+
+/* Stylisation du tableau pour qu'il soit flexible mais aussi défilable sur petits écrans */
+.responsive-table {
+  flex: 1 1 auto; /* Permet au tableau de grandir et de rétrécir mais pas de dépasser sa taille naturelle */
+  overflow-x: auto; /* Permet le défilement horizontal si nécessaire */
+  min-width: 0; /* Réinitialise la largeur minimale pour le défilement sur IE11 */
+  border-collapse: collapse; /* Les bordures des cellules sont fusionnées */
+  margin-bottom: 1rem; /* Espace après le tableau */
+}
+
+.responsive-table th,
+.responsive-table td {
+  border: 1px solid #ddd; /* Bordure des cellules */
+  padding: 8px; /* Espacement interne */
+  text-align: left; /* Alignement du texte */
+}
+
+.responsive-table th {
+  background-color: #f2f2f2; /* Couleur de fond pour les en-têtes */
+}
+
+/* Responsive - Ajustements pour les très petits écrans, si nécessaire */
+@media screen and (max-width: 600px) {
+  .sidebar {
+    width: 100px; /* Réduire la largeur de la sidebar */
+  }
+  .sidebar a {
+    font-size: 18px; /* Réduire la taille de la police des liens */
+  }
+
+  .main-content {
+    margin-left: 100px; /* Ajuster la marge gauche du contenu principal */
+  }
+
+  .dashboard-card {
+    flex-basis: calc(100% - 1rem); /* Prend la pleine largeur, moins la marge */
+  }
+
+  .responsive-table {
+    overflow-x: auto; /* Permet le défilement horizontal */
+    display: block; /* Permet au tableau de défiler horizontalement */
+  }
+}

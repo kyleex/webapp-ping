@@ -9,102 +9,92 @@
     <!-- Bibliothèque Axios pour les requêtes AJAX -->
   </head>
   <body>
-    <div class="flex-container">
-      <div class="sidebar">
-        <nav>
-          <ul>
-            <li><a href="/">Administration</a></li>
-            <li><a href="/form">Formulaire</a></li>
-          </ul>
-        </nav>
-      </div>
+    <section id="dashboard">
+      <nav>
+        <ul>
+          <li><a href="/">Administration</a></li>
+          <li><a href="/form">Formulaire</a></li>
+        </ul>
+      </nav>
 
-      <div class="main-content">
-        <div class="main-header"></div>
+      <header>
+        <h1>Page d'Administration</h1>
+        <p>
+          Bienvenue sur la page d'administration. Vous pouvez voir la liste des
+          formulaires soumis ci-dessous.
+        </p>
+        <button id="goToFormBtn">Envoyer un nouveau formulaire</button>
+      </header>
 
-        <div class="dashboard-header">
-          <h1>Page d'Administration</h1>
-          <p>
-            Bienvenue sur la page d'administration. Vous pouvez voir la liste
-            des formulaires soumis ci-dessous.
-          </p>
-          <button id="goToFormBtn">Envoyer un nouveau formulaire</button>
-        </div>
+      <main>
+        <table id="form-table">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Message</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Les lignes du tableau seront ajoutées ici par JavaScript -->
+          </tbody>
+        </table>
+        <script>
+          document
+            .getElementById("goToFormBtn")
+            .addEventListener("click", function () {
+              window.location.href = "/form"; // Assure-toi que ce chemin est correct
+            });
 
-        <div class="dashboard-cards">
-          <div class="dashboard-card">
-            <div class="responsive-table">
-              <table id="form-table">
-                <thead>
-                  <tr>
-                    <th>Nom</th>
-                    <th>Email</th>
-                    <th>Message</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Les lignes du tableau seront ajoutées ici par JavaScript -->
-                </tbody>
-              </table>
-            </div>
-            <script>
-              document
-                .getElementById("goToFormBtn")
-                .addEventListener("click", function () {
-                  window.location.href = "/form"; // Assure-toi que ce chemin est correct
+          fetch("/get-form-data")
+            .then((response) => response.json())
+            .then((data) => {
+              const tableBody = document
+                .getElementById("form-table")
+                .querySelector("tbody");
+              data.forEach((item) => {
+                let row = tableBody.insertRow();
+                let cellName = row.insertCell(0);
+                let cellEmail = row.insertCell(1);
+                let cellMessage = row.insertCell(2);
+                let cellAction = row.insertCell(3);
+
+                cellName.textContent = item.name;
+                cellEmail.textContent = item.email;
+                cellMessage.textContent = item.message;
+
+                // Créer un bouton Valider
+                let validateButton = document.createElement("button");
+                validateButton.innerText = "Valider";
+                validateButton.addEventListener("click", function () {
+                  validateEntry(item);
                 });
 
-              fetch("/get-form-data")
-                .then((response) => response.json())
-                .then((data) => {
-                  const tableBody = document
-                    .getElementById("form-table")
-                    .querySelector("tbody");
-                  data.forEach((item) => {
-                    let row = tableBody.insertRow();
-                    let cellName = row.insertCell(0);
-                    let cellEmail = row.insertCell(1);
-                    let cellMessage = row.insertCell(2);
-                    let cellAction = row.insertCell(3);
+                // Créer un bouton Refuser
+                let rejectButton = document.createElement("button");
+                rejectButton.innerText = "Refuser";
+                rejectButton.addEventListener("click", function () {
+                  rejectEntry(item);
+                });
 
-                    cellName.textContent = item.name;
-                    cellEmail.textContent = item.email;
-                    cellMessage.textContent = item.message;
+                cellAction.appendChild(validateButton);
+                cellAction.appendChild(rejectButton);
+              });
+            })
+            .catch((error) => console.error("Error:", error));
 
-                    // Créer un bouton Valider
-                    let validateButton = document.createElement("button");
-                    validateButton.innerText = "Valider";
-                    validateButton.addEventListener("click", function () {
-                      validateEntry(item);
-                    });
+          function validateEntry(entry) {
+            console.log("Valider l'inscription:", entry);
+            // Ici, tu pourrais appeler une API pour valider l'entrée
+          }
 
-                    // Créer un bouton Refuser
-                    let rejectButton = document.createElement("button");
-                    rejectButton.innerText = "Refuser";
-                    rejectButton.addEventListener("click", function () {
-                      rejectEntry(item);
-                    });
-
-                    cellAction.appendChild(validateButton);
-                    cellAction.appendChild(rejectButton);
-                  });
-                })
-                .catch((error) => console.error("Error:", error));
-
-              function validateEntry(entry) {
-                console.log("Valider l'inscription:", entry);
-                // Ici, tu pourrais appeler une API pour valider l'entrée
-              }
-
-              function rejectEntry(entry) {
-                console.log("Refuser l'inscription:", entry);
-                // Ici, tu pourrais appeler une API pour refuser l'entrée
-              }
-            </script>
-          </div>
-        </div>
-      </div>
-    </div>
+          function rejectEntry(entry) {
+            console.log("Refuser l'inscription:", entry);
+            // Ici, tu pourrais appeler une API pour refuser l'entrée
+          }
+        </script>
+      </main>
+    </section>
   </body>
 </html>
